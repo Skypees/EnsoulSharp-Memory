@@ -42,7 +42,7 @@
             E = new Spell(SpellSlot.E, 225f);
 
           
-            MainMenu = new Menu("MemoryDrMundo", "Memory DrMundo", true);
+            MainMenu = new Menu("MDrMundo", "Memory DrMundo", true);
 
             var comboMenu = new Menu("Combo", "Combo Settings");
             comboMenu.Add(new MenuBool("comboQ", "Use Q", true));
@@ -64,7 +64,7 @@
 
             var drawMenu = new Menu("Draw", "Draw Settings");
             drawMenu.Add(new MenuBool("drawQ", "Draw Q Range", true));
-            MainMenu.Add(comboMenu);
+            MainMenu.Add(drawMenu);
 
             MainMenu.Add(new MenuBool("isDead", "if Player is Dead not Draw Range", true));
 
