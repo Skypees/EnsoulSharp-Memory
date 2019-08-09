@@ -1,0 +1,11 @@
+E:\Template\bin\Release\Template.exe.config
+E:\Template\bin\Release\Template.exe
+E:\Template\bin\Release\Template.pdb
+E:\Template\bin\Release\EnsoulSharp.SDK.dll
+E:\Template\bin\Release\EnsoulSharp.Wrapper.dll
+E:\Template\bin\Release\SharpDX.Direct3D9.dll
+E:\Template\bin\Release\SharpDX.dll
+E:\Template\bin\Release\Newtonsoft.Json.dll
+E:\Template\obj\Debug\Template.csprojResolveAssemblyReference.cache
+E:\Template\obj\Debug\Template.exe
+E:\Template\obj\Debug\Template.pdb
