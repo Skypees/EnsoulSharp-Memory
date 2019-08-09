@@ -29,6 +29,10 @@
 
         private static void OnGameLoad()
         {
+            if (ObjectManager.Player.CharacterName != "DrMundo")
+            {
+                return;
+            }
 
             Q = new Spell(SpellSlot.Q, 975f);
             Q.SetSkillshot(0.25f, 100f, 1850f, true, SkillshotType.Line);
