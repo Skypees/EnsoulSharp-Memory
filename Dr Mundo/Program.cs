@@ -42,7 +42,7 @@
             E = new Spell(SpellSlot.E, 225f);
 
           
-            MainMenu = new Menu("Memory DrMundo", "Memory DrMundo", true);
+            MainMenu = new Menu("MemoryDrMundo", "Memory DrMundo", true);
 
             var comboMenu = new Menu("Combo", "Combo Settings");
             comboMenu.Add(new MenuBool("comboQ", "Use Q", true));
