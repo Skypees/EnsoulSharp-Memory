@@ -46,6 +46,17 @@
             comboMenu.Add(new MenuBool("comboE", "Use E", true));
            // comboMenu.Add(new MenuBool("comboR", "Use R", true));
             MainMenu.Add(comboMenu);
+            var laneclearMenu = new Menu("Lane Clear", "LaneClear");
+            laneclearMenu.Add(new MenuBool("clearQ", "Use Q", true));
+            laneclearMenu.Add(new MenuBool("clearW", "Use W", true));
+            laneclearMenu.Add(new MenuBool("clearE", "Use E", true));
+            MainMenu.Add(laneclearMenu);
+
+            var jungleclearMenu = new Menu("Jungle Clear", "JungleClear");
+            jungleclearMenu.Add(new MenuBool("jungleQ", "Use Q", true));
+            jungleclearMenu.Add(new MenuBool("jungleW", "Use W", true));
+            jungleclearMenu.Add(new MenuBool("jungleE", "Use E", true));
+            MainMenu.Add(jungleclearMenu);
 
             var drawMenu = new Menu("Draw", "Draw Settings");
             drawMenu.Add(new MenuBool("drawQ", "Draw Q Range", true));
@@ -101,14 +112,73 @@
             
         }
 
+        static void JungleClear()
+        {
+            var mobs = GameObjects.Jungle.Where(x => x.IsValidTarget(Q.Range));
+            if (MainMenu["Jungle Clear"]["jungleQ"].GetValue<MenuBool>().Enabled && Q.IsReady())
+            {
+                foreach (var minion in mobs)
+                {
+                    if (minion.IsValidTarget())
+                    {
+                        Q.GetPrediction(minion);
+                        Q.CastIfHitchanceEquals(minion, HitChance.High);
+                    }
+                }
+            }
+            if (!IsBurning())
+            {
+                if (MainMenu["Lane Clear"]["jungleW"].GetValue<MenuBool>().Enabled && W.IsReady() && ObjectManager.Get<AIMinionClient>().Any(minion => minion.IsValidTarget(W.Range)))
+                {
+                    W.Cast();
+                }
+            }
+            if (MainMenu["Lane Clear"]["jungleE"].GetValue<MenuBool>().Enabled && E.IsReady())
+            {
+                foreach (var minion in mobs)
+                {
+                    if (minion.IsValidTarget())
+                    {
+                        E.Cast();
+                    }
+
+                }
+            }
+
+        }
         private static void Clear()
         {
             var minions = GameObjects.EnemyMinions.Where(x => x.IsValidTarget(Q.Range) && x.IsMinion());
+            if (MainMenu["Lane Clear"]["clearQ"].GetValue<MenuBool>().Enabled && Q.IsReady())
+            {
+                foreach (var minion in minions)
+                {
+                    if (minion.IsValidTarget())
+                    {
+                        Q.GetPrediction(minion);
+                        Q.CastIfHitchanceEquals(minion, HitChance.Medium);
+                    }
+                }
+            }
+            if (!IsBurning())
+            {
+                if (MainMenu["Lane Clear"]["clearW"].GetValue<MenuBool>().Enabled && W.IsReady() && ObjectManager.Get<AIMinionClient>().Any(minion => minion.IsValidTarget(W.Range)))
+                {
+                    W.Cast();
+                }
+            }
+            if (MainMenu["Lane Clear"]["clearE"].GetValue<MenuBool>().Enabled && E.IsReady())
+            {
+                foreach (var minion in minions)
+                {
+                    if (minion.IsValidTarget())
+                    {
+                        E.CastOnUnit(minion);
+                    }
 
-            var mobs = GameObjects.Jungle.Where(x => x.IsValidTarget(Q.Range));
-            var lMobs = GameObjects.Jungle.Where(x => x.IsValidTarget(Q.Range) && x.GetJungleType() == JungleType.Legendary);
+                }
+            }
 
-            var bMobs = GameObjects.Jungle.Where(x => x.IsValidTarget(Q.Range) && x.GetJungleType() == JungleType.Large);
         }
 
         private static void OnUpdate(EventArgs args)
