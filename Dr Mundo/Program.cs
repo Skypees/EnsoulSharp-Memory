@@ -37,7 +37,7 @@
             Q = new Spell(SpellSlot.Q, 975f);
             Q.SetSkillshot(0.25f, 100f, 1850f, true, SkillshotType.Line);
 
-            W = new Spell(SpellSlot.E, 225f);
+            W = new Spell(SpellSlot.W, 325f);
 
             E = new Spell(SpellSlot.E, 225f);
 
@@ -91,16 +91,18 @@
                     }
                 }
             }
+            if (ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1)
+                {
            if (MainMenu["Combo"]["comboW"].GetValue<MenuBool>().Enabled && W.IsReady())
             {
                 var target = TargetSelector.GetTarget(W.Range, DamageType.Physical);
                 target = TargetSelector.GetTarget(W.Range);
-                if (target != null && target.IsValidTarget(W.Range) && !IsBurning())
+                if (target != null && target.IsValidTarget(W.Range))
                 {
                     W.Cast();
                 }
             }
-
+                }
             if (MainMenu["Combo"]["comboE"].GetValue<MenuBool>().Enabled && E.IsReady())
             {
 
@@ -129,12 +131,13 @@
                     }
                 }
             }
-                      
-                if (MainMenu["Lane Clear"]["jungleW"].GetValue<MenuBool>().Enabled && W.IsReady() && !IsBurning() && ObjectManager.Get<AIMinionClient>().Any(minion => minion.IsValidTarget(W.Range)))
+                 if (ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1)
+                {     
+                if (MainMenu["Lane Clear"]["jungleW"].GetValue<MenuBool>().Enabled && W.IsReady() && ObjectManager.Get<AIMinionClient>().Any(minion => minion.IsValidTarget(W.Range)))
                 {
                     W.Cast();
                 }
-            
+                }
             if (MainMenu["Lane Clear"]["jungleE"].GetValue<MenuBool>().Enabled && E.IsReady())
             {
                 foreach (var minion in mobs)
@@ -162,10 +165,13 @@
                     }
                 }
             }
+            if (ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1)
+                {     
 
                 if (MainMenu["Lane Clear"]["clearW"].GetValue<MenuBool>().Enabled && W.IsReady() && !IsBurning() && ObjectManager.Get<AIMinionClient>().Any(minion => minion.IsValidTarget(W.Range)))
                 {
                     W.Cast();
+                }
                 }
             if (MainMenu["Lane Clear"]["clearE"].GetValue<MenuBool>().Enabled && E.IsReady())
             {
