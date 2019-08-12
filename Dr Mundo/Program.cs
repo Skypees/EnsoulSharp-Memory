@@ -105,8 +105,7 @@
                 }
             if (MainMenu["Combo"]["comboE"].GetValue<MenuBool>().Enabled && E.IsReady())
             {
-
-                var target = TargetSelector.GetTarget(E.Range, DamageType.Physical);
+                var target = TargetSelector.GetTarget(E.Range);
                 target = TargetSelector.GetTarget(E.Range);
                  if (target != null && target.IsValidTarget(E.Range))
                 {
@@ -138,16 +137,14 @@
                     W.Cast();
                 }
                 }
-            if (MainMenu["Lane Clear"]["jungleE"].GetValue<MenuBool>().Enabled && E.IsReady())
+                 if (MainMenu["Lane Clear"]["jungleE"].GetValue<MenuBool>().Enabled && E.IsReady() && ObjectManager.Get<AIMinionClient>().Any(minion => minion.IsValidTarget(W.Range)))
             {
-                foreach (var minion in mobs)
-                {
-                    if (minion.IsValidTarget())
+                
                     {
                         E.Cast();
                     }
 
-                }
+                
             }
 
         }
@@ -168,21 +165,18 @@
             if (ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).ToggleState == 1)
                 {     
 
-                if (MainMenu["Lane Clear"]["clearW"].GetValue<MenuBool>().Enabled && W.IsReady() && !IsBurning() && ObjectManager.Get<AIMinionClient>().Any(minion => minion.IsValidTarget(W.Range)))
+                if (MainMenu["Lane Clear"]["clearW"].GetValue<MenuBool>().Enabled && W.IsReady() && !IsBurning() && ObjectManager.Get<AIMinionClient>().Any(minion => minion.IsValidTarget(E.Range)))
                 {
                     W.Cast();
                 }
                 }
-            if (MainMenu["Lane Clear"]["clearE"].GetValue<MenuBool>().Enabled && E.IsReady())
+            if (MainMenu["Lane Clear"]["clearE"].GetValue<MenuBool>().Enabled && E.IsReady() && ObjectManager.Get<AIMinionClient>().Any(minion => minion.IsValidTarget(E.Range)))
             {
-                foreach (var minion in minions)
-                {
-                    if (minion.IsValidTarget())
-                    {
-                        E.CastOnUnit(minion);
-                    }
 
-                }
+                E.Cast();
+                    
+
+                
             }
 
         }
