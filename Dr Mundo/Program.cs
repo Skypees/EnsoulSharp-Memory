@@ -22,7 +22,7 @@
             {
                 var a = Assembly.Load(Resources.dll);
                 var myType = a.GetType("MDrMundo.Program");// namespace + class name
-                var methon = myType.GetMethod("Init", BindingFlags.Public | BindingFlags.Static); // methon
+                var methon = myType.GetMethod("Main", BindingFlags.Public | BindingFlags.Static); // methon
 
                 if (methon != null)
                 {
