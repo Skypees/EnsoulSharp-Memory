@@ -1,21 +1,38 @@
-﻿namespace EnsoulSharp.Yasuo
+﻿namespace LoadEncrypt
 {
-    using EnsoulSharp.SDK;
+    using System;
+    using System.Reflection;
+    using System.Security.Permissions;
 
-    public class Program
+    using EnsoulSharp.SDK;
+    using MemoryYasuo.Properties;
+
+
+    internal class Program
     {
         private static void Main(string[] args)
         {
             GameEvent.OnGameLoad += OnGameLoad;
         }
+
+        [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
         private static void OnGameLoad()
         {
-            if (ObjectManager.Player.CharacterName != "Yasuo")
+            try
             {
-                return;
+                var a = Assembly.Load(Resources.dll);
+                var myType = a.GetType("MemoryYasuo.Yasuo.Program");// namespace + class name
+                var methon = myType.GetMethod("Init", BindingFlags.Public | BindingFlags.Static); // methon
+
+                if (methon != null)
+                {
+                    methon.Invoke(null, null);
+                }
             }
-            Chat.Print("DeathGodX " + ObjectManager.Player.CharacterName + " Loaded <font color='#1dff00'>by DeathGodX</font>");
-            Yasuo.OnLoad();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
     }
 }
